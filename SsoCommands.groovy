@@ -22,9 +22,9 @@ class SsoCommands {
         println("${sso_commands_upsert_img}")
     }
 
-    public void buildDockerImages(def script, def env) {
-        ssoCommandsUpsertImage = script.docker.build("${sso_commands_upsert_img}", "-f ${env.WORKSPACE}/sso_commands/populate_index/Dockerfile .")
-        ssoCommandsDeleteImage = script.docker.build("${sso_commands_delete_img}", "-f ${env.WORKSPACE}/sso_commands/delete_index/Dockerfile .")
+    public void buildDockerImages(def script) {
+        ssoCommandsUpsertImage = script.docker.build("${sso_commands_upsert_img}", "-f ${script.env.WORKSPACE}/sso_commands/populate_index/Dockerfile .")
+        ssoCommandsDeleteImage = script.docker.build("${sso_commands_delete_img}", "-f ${script.env.WORKSPACE}/sso_commands/delete_index/Dockerfile .")
     }
 
     public void runDockerImages() {
