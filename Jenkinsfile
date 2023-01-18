@@ -27,19 +27,22 @@ pipeline {
 
         stage("Testing - running in Jenkins node") {
             steps {
-                powershell "docker run --name ${container_name} ${img}"
+                powershell "docker run --name ${sso_commands_delete} ${sso_commands_delete_img}"
+                powershell "docker run --name ${sso_commands_upsert} ${sso_commands_upsert_img}"
             }
         }
 
         stage("Stopping running container") {
             steps {
-                powershell "docker stop ${container_name}"
+                powershell "docker stop ${sso_commands_delete}"
+                powershell "docker stop ${sso_commands_upsert}"
             }
         }
 
         stage("Removing the container") {
             steps {
-                powershell "docker rm ${container_name}"
+                powershell "docker rm ${sso_commands_delete}"
+                powershell "docker rm ${sso_commands_upsert}"
             }
         }
     }
