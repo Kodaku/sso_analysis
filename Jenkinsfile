@@ -19,7 +19,7 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                    ssoCommands.initializeImages()
+                    ssoCommands.initializeImages(this)
                     if (params.sso_commands == "Reset") {
                         ssoCommands.buildDockerImages(this)
                     }

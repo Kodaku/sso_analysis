@@ -15,9 +15,9 @@ class SsoCommands {
         ssoCommandsDeleteImage = ''
     }
 
-    public void initializeImages() {
-        sso_commands_delete_img = sso_commands_delete_registry + ":${env.BUILD_ID}"
-        sso_commands_upsert_img = sso_commands_upsert_registry + ":${env.BUILD_ID}"
+    public void initializeImages(def script) {
+        sso_commands_delete_img = sso_commands_delete_registry + ":${script.env.BUILD_ID}"
+        sso_commands_upsert_img = sso_commands_upsert_registry + ":${script.env.BUILD_ID}"
         println("${sso_commands_delete_img}")
         println("${sso_commands_upsert_img}")
     }
