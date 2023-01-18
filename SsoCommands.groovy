@@ -8,8 +8,8 @@ def ssoCommandsUpsertImage
 def ssoCommandsDeleteImage
 
 def setEnvironment() {
-    sso_commands_upsert_registry = "axelmastroianni/${sso_commands_upsert}"
-    sso_commands_delete_registry = "axelmastroianni/${sso_commands_delete}"
+    sso_commands_upsert_registry = "axelmastroianni/${this.sso_commands_upsert}"
+    sso_commands_delete_registry = "axelmastroianni/${this.sso_commands_delete}"
     ssoCommandsUpsertImage = ''
     ssoCommandsDeleteImage = ''
 }
