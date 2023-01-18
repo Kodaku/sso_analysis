@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     if (params.sso_commands == "Reset") {
-                        ssoCommands.runDockerImages()
+                        ssoCommands.runDockerImages(this)
                     }
                 }
             }
@@ -41,7 +41,7 @@ pipeline {
             steps {
                 script {
                     if (params.sso_commands == "Reset") {
-                        ssoCommands.stopDockerContainers()
+                        ssoCommands.stopDockerContainers(this)
                     }
                 }
             }
@@ -51,7 +51,7 @@ pipeline {
             steps {
                 script {
                     if (params.sso_commands == "Reset") {
-                        ssoCommands.deleteDockerContainers()
+                        ssoCommands.deleteDockerContainers(this)
                     }
                 }
             }

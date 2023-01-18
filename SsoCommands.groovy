@@ -27,19 +27,19 @@ class SsoCommands {
         ssoCommandsDeleteImage = script.docker.build("${sso_commands_delete_img}", "-f ${script.env.WORKSPACE}/sso_commands/delete_index/Dockerfile .")
     }
 
-    public void runDockerImages() {
-        powershell "docker run --name ${sso_commands_delete} ${sso_commands_delete_img}"
-        powershell "docker run --name ${sso_commands_upsert} ${sso_commands_upsert_img}"
+    public void runDockerImages(def script) {
+        script.powershell "docker run --name ${sso_commands_delete} ${sso_commands_delete_img}"
+        script.powershell "docker run --name ${sso_commands_upsert} ${sso_commands_upsert_img}"
     }
 
-    public void stopDockerContainers() {
-        powershell "docker stop ${sso_commands_delete}"
-        powershell "docker stop ${sso_commands_upsert}"
+    public void stopDockerContainers(def script) {
+        script.powershell "docker stop ${sso_commands_delete}"
+        script.powershell "docker stop ${sso_commands_upsert}"
     }
 
-    public void deleteDockerContainers() {
-        powershell "docker rm ${sso_commands_delete}"
-        powershell "docker rm ${sso_commands_upsert}"
+    public void deleteDockerContainers(def script) {
+        script.powershell "docker rm ${sso_commands_delete}"
+        script.powershell "docker rm ${sso_commands_upsert}"
     }
 }
 
