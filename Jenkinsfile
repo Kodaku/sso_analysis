@@ -8,9 +8,11 @@ pipeline {
 
     stages {
         stage("Init") {
-            script {
-                ssoCommands = load "SsoCommands.groovy"
-                ssoCommands.setEnvironment()
+            steps {
+                script {
+                    ssoCommands = load "SsoCommands.groovy"
+                    ssoCommands.setEnvironment()
+                }
             }
         }
         stage("Build image") {
