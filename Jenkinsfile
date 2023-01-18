@@ -19,8 +19,8 @@ pipeline {
                     sso_commands_upsert_img = sso_commands_upsert_registry + ":${env.BUILD_ID}"
                     println("${sso_commands_delete_img}")
                     println("${sso_commands_upsert_img}")
-                    ssoCommandsUpsertImage = docker.build("${sso_commands_upsert_img}", "-f ${env.WORKSPACE}/sso_commands/populate_index/Dockerfile")
-                    ssoCommandsDeleteImage = docker.build("${sso_commands_delete_img}", "-f ${env.WORKSPACE}/sso_commands/delete_index/Dockerfile")
+                    ssoCommandsUpsertImage = docker.build("${sso_commands_upsert_img}", "-f ${env.WORKSPACE}/sso_commands/populate_index/Dockerfile .")
+                    ssoCommandsDeleteImage = docker.build("${sso_commands_delete_img}", "-f ${env.WORKSPACE}/sso_commands/delete_index/Dockerfile .")
                 }
             }
         }
