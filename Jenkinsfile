@@ -1,14 +1,16 @@
-import SsoCommands
-
-ssoCommands = new SsoCommands()
+def sso_commands
 
 pipeline {
-    environment {
-        ssoCommands.setEnvironment()
-    }
+//     environment {
+//         ssoCommands.setEnvironment()
+//     }
     agent any
 
     stages {
+        stage("Init") {
+            ssoCommands = load "SsoCommands.groovy"
+            ssoCommands.setEnvironment()
+        }
         stage("Build image") {
             steps {
                 script {
