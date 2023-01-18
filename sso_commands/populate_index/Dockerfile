@@ -4,8 +4,7 @@ WORKDIR /code
 
 COPY ./sso_commands/populate_index/requirements.txt /code/requirements.txt
 
-RUN apt-get update \
-    && apt-get -yy install libmariadb-dev
+RUN apt-get -yy install libmariadb-dev
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
