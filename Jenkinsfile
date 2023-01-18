@@ -10,7 +10,8 @@ pipeline {
         stage("Init") {
             steps {
                 script {
-                    ssoCommands = load "SsoCommands.groovy"
+                    def commandsScript = load "SsoCommands.groovy"
+                    ssoCommands = commandsScript.createSsoCommands()
                     ssoCommands.setEnvironment()
                 }
             }
