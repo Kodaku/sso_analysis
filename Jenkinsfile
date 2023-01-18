@@ -20,8 +20,7 @@ pipeline {
                 script {
                     ssoCommands.initializeImages()
                     if (params.sso_commands == "Reset") {
-                        ssoCommandsUpsertImage = docker.build("${sso_commands_upsert_img}", "-f ${env.WORKSPACE}/sso_commands/populate_index/Dockerfile .")
-                        ssoCommandsDeleteImage = docker.build("${sso_commands_delete_img}", "-f ${env.WORKSPACE}/sso_commands/delete_index/Dockerfile .")
+                        ssoCommands.buildDockerImages()
                     }
                 }
             }
@@ -31,8 +30,7 @@ pipeline {
             steps {
                 script {
                     if (params.sso_commands == "Reset") {
-                        powershell "docker run --name ${sso_commands_delete} ${sso_commands_delete_img}"
-                        powershell "docker run --name ${sso_commands_upsert} ${sso_commands_upsert_img}"
+                        ssoCommands.runDockerImages()
                     }
                 }
             }
@@ -42,8 +40,7 @@ pipeline {
             steps {
                 script {
                     if (params.sso_commands == "Reset") {
-                        powershell "docker stop ${sso_commands_delete}"
-                        powershell "docker stop ${sso_commands_upsert}"
+                        ssoCommands.stopDockerContainers()
                     }
                 }
             }
@@ -53,8 +50,7 @@ pipeline {
             steps {
                 script {
                     if (params.sso_commands == "Reset") {
-                        powershell "docker rm ${sso_commands_delete}"
-                        powershell "docker rm ${sso_commands_upsert}"
+                        ssoCommands.deleteDockerContainers()
                     }
                 }
             }

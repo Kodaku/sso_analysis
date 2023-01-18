@@ -21,4 +21,24 @@ def initializeImages() {
     println("${sso_commands_upsert_img}")
 }
 
+def buildDockerImages() {
+    ssoCommandsUpsertImage = docker.build("${sso_commands_upsert_img}", "-f ${env.WORKSPACE}/sso_commands/populate_index/Dockerfile .")
+    ssoCommandsDeleteImage = docker.build("${sso_commands_delete_img}", "-f ${env.WORKSPACE}/sso_commands/delete_index/Dockerfile .")
+}
+
+def runDockerImages() {
+    powershell "docker run --name ${sso_commands_delete} ${sso_commands_delete_img}"
+    powershell "docker run --name ${sso_commands_upsert} ${sso_commands_upsert_img}"
+}
+
+def stopDockerContainers() {
+    powershell "docker stop ${sso_commands_delete}"
+    powershell "docker stop ${sso_commands_upsert}"
+}
+
+def deleteDockerContainers() {
+    powershell "docker rm ${sso_commands_delete}"
+    powershell "docker rm ${sso_commands_upsert}"
+}
+
 return this
