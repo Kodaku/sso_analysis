@@ -29,27 +29,33 @@ pipeline {
 
         stage("Testing - running in Jenkins node") {
             steps {
-                if (params.sso_commands == "Reset") {
-                    powershell "docker run --name ${sso_commands_delete} ${sso_commands_delete_img}"
-                    powershell "docker run --name ${sso_commands_upsert} ${sso_commands_upsert_img}"
+                script {
+                    if (params.sso_commands == "Reset") {
+                        powershell "docker run --name ${sso_commands_delete} ${sso_commands_delete_img}"
+                        powershell "docker run --name ${sso_commands_upsert} ${sso_commands_upsert_img}"
+                    }
                 }
             }
         }
 
         stage("Stopping running container") {
             steps {
-                if (params.sso_commands == "Reset") {
-                    powershell "docker stop ${sso_commands_delete}"
-                    powershell "docker stop ${sso_commands_upsert}"
+                script {
+                    if (params.sso_commands == "Reset") {
+                        powershell "docker stop ${sso_commands_delete}"
+                        powershell "docker stop ${sso_commands_upsert}"
+                    }
                 }
             }
         }
 
         stage("Removing the container") {
             steps {
-                if (params.sso_commands == "Reset") {
-                    powershell "docker rm ${sso_commands_delete}"
-                    powershell "docker rm ${sso_commands_upsert}"
+                script {
+                    if (params.sso_commands == "Reset") {
+                        powershell "docker rm ${sso_commands_delete}"
+                        powershell "docker rm ${sso_commands_upsert}"
+                    }
                 }
             }
         }
