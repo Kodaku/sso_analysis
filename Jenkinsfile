@@ -1,6 +1,6 @@
 import SsoCommands
 
-ssoCommands = SsoCommands()
+ssoCommands = new SsoCommands()
 
 pipeline {
     environment {
