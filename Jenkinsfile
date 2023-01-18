@@ -1,4 +1,4 @@
-def sso_commands
+def ssoCommands
 
 pipeline {
 //     environment {
