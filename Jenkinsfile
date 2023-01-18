@@ -21,7 +21,7 @@ pipeline {
                 script {
                     ssoCommands.initializeImages()
                     if (params.sso_commands == "Reset") {
-                        ssoCommands.buildDockerImages(this)
+                        ssoCommands.buildDockerImages(this, env)
                     }
                 }
             }
