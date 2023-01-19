@@ -1,7 +1,7 @@
 from elasticsearch import Elasticsearch
 
 es = Elasticsearch(
-        hosts=['http://localhost:9200'],
+        hosts=['http://host.docker.internal:9200'],
         basic_auth=('elastic', 'Cj-ChuXcllkRQF8t8VFa')
     )
 

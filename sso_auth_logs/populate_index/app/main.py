@@ -25,7 +25,7 @@ if __name__ == "__main__":
     auth_logs_df = build_dataframe(cur)
 
     es = Elasticsearch(
-        hosts=['http://localhost:9200'],
+        hosts=['http://host.docker.internal:9200'],
         basic_auth=('elastic', 'Cj-ChuXcllkRQF8t8VFa')
     )
 
