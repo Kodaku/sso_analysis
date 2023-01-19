@@ -1,9 +1,16 @@
 class Sso {
     GroovyShell shell = new GroovyShell()
-    def ssoCommands = shell.parse(new File('./groovy_scripts/SsoCommands.groovy')).createSsoCommands()
-    def ssoAuthLogs = shell.parse(new File('./groovy_scripts/SsoAuthLogs.groovy')).createSsoAuthLogs()
-    def ssoUserLogs = shell.parse(new File('./groovy_scripts/SsoUserLogs.groovy')).createSsoUserLogs()
-    def ssoUsers = shell.parse(new File('./groovy_scripts/SsoUsers.groovy')).createSsoUsers()
+    def ssoCommands
+    def ssoAuthLogs
+    def ssoUserLogs
+    def ssoUsers
+
+    public void setup(def script) {
+        ssoCommands = shell.parse(new File('${script.env.WORKSPACE}/groovy_scripts/SsoCommands.groovy')).createSsoCommands()
+        ssoAuthLogs = shell.parse(new File('${script.env.WORKSPACE}/groovy_scripts/SsoAuthLogs.groovy')).createSsoAuthLogs()
+        ssoUserLogs = shell.parse(new File('${script.env.WORKSPACE}/groovy_scripts/SsoUserLogs.groovy')).createSsoUserLogs()
+        ssoUsers = shell.parse(new File('${script.env.WORKSPACE}/groovy_scripts/SsoUsers.groovy')).createSsoUsers()
+    }
 
     public void setEnvironment(def script) {
         if (script.params.is_sso_commands) {
