@@ -71,8 +71,8 @@ class SsoUsers {
     }
 }
 
-SsoCommands createSsoCommands() {
-    new SsoCommands()
+SsoUsers createSsoUsers() {
+    new SsoUsers()
 }
 
 return this
