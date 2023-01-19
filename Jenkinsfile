@@ -1,4 +1,7 @@
 def ssoCommands
+def opzioneReset = "Reset"
+def opzioneElimina = "Elimina"
+def opzionePopola = "Popola"
 
 pipeline {
 //     environment {
@@ -20,8 +23,12 @@ pipeline {
             steps {
                 script {
                     ssoCommands.initializeImages(this)
-                    if (params.sso_commands == "Reset") {
-                        ssoCommands.buildDockerImages(this)
+                    if (params.sso_commands == opzioneReset) {
+                        ssoCommands.buildDockerImagesReset(this)
+                    } else if (params.sso_commands == opzioneElimina) {
+                        ssoCommands.buildDockerImageDelete(this)
+                    } else if (params.sso_commands == opzionePopola) {
+                        ssoCommands.buildDockerImagePopulate(this)
                     }
                 }
             }
@@ -30,8 +37,12 @@ pipeline {
         stage("Testing - running in Jenkins node") {
             steps {
                 script {
-                    if (params.sso_commands == "Reset") {
-                        ssoCommands.runDockerImages(this)
+                    if (params.sso_commands == opzioneReset) {
+                        ssoCommands.runDockerImagesReset(this)
+                    } else if (params.sso_commands == opzioneElimina) {
+                        ssoCommands.runDockerImageElimina(this)
+                    } else if (params.sso_commands == opzionePopola) {
+                        ssoCommands.runDockerImagePopola(this)
                     }
                 }
             }
@@ -40,8 +51,12 @@ pipeline {
         stage("Stopping running container") {
             steps {
                 script {
-                    if (params.sso_commands == "Reset") {
-                        ssoCommands.stopDockerContainers(this)
+                    if (params.sso_commands == opzioneReset) {
+                        ssoCommands.stopDockerContainersReset(this)
+                    } else if (params.sso_commands == opzioneElimina) {
+                        ssoCommands.stopDockerContainerElimina(this)
+                    } else if (params.sso_commands == opzionePopola) {
+                        ssoCommands.stopDockerContainerPopola(this)
                     }
                 }
             }
@@ -50,8 +65,12 @@ pipeline {
         stage("Removing the container") {
             steps {
                 script {
-                    if (params.sso_commands == "Reset") {
-                        ssoCommands.deleteDockerContainers(this)
+                    if (params.sso_commands == opzioneReset) {
+                        ssoCommands.deleteDockerContainersReset(this)
+                    } else if (params.sso_commands == opzioneElimina) {
+                        ssoCommands.deleteDockerContainerElimina(this)
+                    } else if (params.sso_commands == opzionePopola) {
+                        ssoCommands.deleteDockerContainerPopola(this)
                     }
                 }
             }
