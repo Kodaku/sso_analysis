@@ -22,56 +22,49 @@ class SsoCommands {
         println("${sso_commands_upsert_img}")
     }
 
-    public void buildDockerImageDelete(def script) {
-        ssoCommandsDeleteImage = script.docker.build("${sso_commands_delete_img}", "-f ${script.env.WORKSPACE}/sso_commands/delete_index/Dockerfile .")
+    public void buildDockerImages(def script) {
+        initializeImages(script)
+        if (script.params.sso_commands == opzioneReset) {
+            ssoCommandsUpsertImage = script.docker.build("${sso_commands_upsert_img}", "-f ${script.env.WORKSPACE}/sso_commands/populate_index/Dockerfile .")
+            ssoCommandsDeleteImage = script.docker.build("${sso_commands_delete_img}", "-f ${script.env.WORKSPACE}/sso_commands/delete_index/Dockerfile .")
+        } else if (script.params.sso_commands == opzioneElimina) {
+            ssoCommandsDeleteImage = script.docker.build("${sso_commands_delete_img}", "-f ${script.env.WORKSPACE}/sso_commands/delete_index/Dockerfile .")
+        } else if (script.params.sso_commands == opzionePopola) {
+            ssoCommandsUpsertImage = script.docker.build("${sso_commands_upsert_img}", "-f ${script.env.WORKSPACE}/sso_commands/populate_index/Dockerfile .")
+        }
     }
 
-    public void buildDockerImagePopulate(def script) {
-        ssoCommandsUpsertImage = script.docker.build("${sso_commands_upsert_img}", "-f ${script.env.WORKSPACE}/sso_commands/populate_index/Dockerfile .")
+    public void runDockerContainers(def script) {
+        if (script.params.sso_commands == opzioneReset) {
+            script.powershell "docker run --name ${sso_commands_delete} ${sso_commands_delete_img}"
+            script.powershell "docker run --name ${sso_commands_upsert} ${sso_commands_upsert_img}"
+        } else if (script.params.sso_commands == opzioneElimina) {
+            script.powershell "docker run --name ${sso_commands_delete} ${sso_commands_delete_img}"
+        } else if (script.params.sso_commands == opzionePopola) {
+            script.powershell "docker run --name ${sso_commands_upsert} ${sso_commands_upsert_img}"
+        }
     }
 
-    public void buildDockerImagesReset(def script) {
-        ssoCommandsUpsertImage = script.docker.build("${sso_commands_upsert_img}", "-f ${script.env.WORKSPACE}/sso_commands/populate_index/Dockerfile .")
-        ssoCommandsDeleteImage = script.docker.build("${sso_commands_delete_img}", "-f ${script.env.WORKSPACE}/sso_commands/delete_index/Dockerfile .")
+    public void stopDockerContainers(def script) {
+        if (script.params.sso_commands == opzioneReset) {
+            script.powershell "docker stop ${sso_commands_delete}"
+            script.powershell "docker stop ${sso_commands_upsert}"
+        } else if (script.params.sso_commands == opzioneElimina) {
+            script.powershell "docker stop ${sso_commands_delete}"
+        } else if (script.params.sso_commands == opzionePopola) {
+            script.powershell "docker stop ${sso_commands_upsert}"
+        }
     }
 
-    public void runDockerImageDelete(def script) {
-        script.powershell "docker run --name ${sso_commands_delete} ${sso_commands_delete_img}"
-    }
-
-    public void runDockerImagePopulate(def script) {
-        script.powershell "docker run --name ${sso_commands_upsert} ${sso_commands_upsert_img}"
-    }
-
-    public void runDockerImagesReset(def script) {
-        script.powershell "docker run --name ${sso_commands_delete} ${sso_commands_delete_img}"
-        script.powershell "docker run --name ${sso_commands_upsert} ${sso_commands_upsert_img}"
-    }
-
-    public void stopDockerContainerDelete(def script) {
-        script.powershell "docker stop ${sso_commands_delete}"
-    }
-
-    public void stopDockerContainerPopulate(def script) {
-        script.powershell "docker stop ${sso_commands_upsert}"
-    }
-
-    public void stopDockerContainersReset(def script) {
-        script.powershell "docker stop ${sso_commands_delete}"
-        script.powershell "docker stop ${sso_commands_upsert}"
-    }
-
-    public void deleteDockerContainerDelete(def script) {
-        script.powershell "docker rm ${sso_commands_delete}"
-    }
-
-    public void deleteDockerContainerPopulate(def script) {
-        script.powershell "docker rm ${sso_commands_upsert}"
-    }
-
-    public void deleteDockerContainersReset(def script) {
-        script.powershell "docker rm ${sso_commands_delete}"
-        script.powershell "docker rm ${sso_commands_upsert}"
+    public void removeDockerContainers(def script) {
+        if (script.params.sso_commands == opzioneReset) {
+            script.powershell "docker rm ${sso_commands_delete}"
+            script.powershell "docker rm ${sso_commands_upsert}"
+        } else if (script.params.sso_commands == opzioneElimina) {
+            script.powershell "docker rm ${sso_commands_delete}"
+        } else if (script.params.sso_commands == opzionePopola) {
+            script.powershell "docker rm ${sso_commands_upsert}"
+        }
     }
 }
 
