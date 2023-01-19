@@ -1,4 +1,5 @@
 def ssoCommands
+def sso
 def opzioneReset = "Reset"
 def opzioneElimina = "Elimina"
 def opzionePopola = "Popola"
@@ -13,11 +14,13 @@ pipeline {
         stage("Init") {
             steps {
                 script {
+                    sso = load "./groovy_scripts/Sso.groovy"
                     if (params.is_sso_commands) {
                         def commandsScript = load "./groovy_scripts/SsoCommands.groovy"
                         ssoCommands = commandsScript.createSsoCommands()
                         ssoCommands.setEnvironment()
                     }
+                    sso.setEnvironment(this)
                 }
             }
         }
