@@ -14,7 +14,9 @@ pipeline {
         stage("Init") {
             steps {
                 script {
-                    sso = load "./groovy_scripts/Sso.groovy"
+                    def ssoScript = load "./groovy_scripts/Sso.groovy"
+                    sso = ssoScript.createSso()
+                    sso.setup(this)
                     if (params.is_sso_commands) {
                         def commandsScript = load "./groovy_scripts/SsoCommands.groovy"
                         ssoCommands = commandsScript.createSsoCommands()

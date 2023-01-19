@@ -27,3 +27,9 @@ class Sso {
         }
     }
 }
+
+Sso createSso() {
+    return new Sso()
+}
+
+return this
