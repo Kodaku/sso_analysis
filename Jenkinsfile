@@ -14,21 +14,25 @@ pipeline {
             steps {
                 script {
                     def commandsScript = load "SsoCommands.groovy"
-                    ssoCommands = commandsScript.createSsoCommands()
-                    ssoCommands.setEnvironment()
+                    if (params.is_sso_commands) {
+                        ssoCommands = commandsScript.createSsoCommands()
+                        ssoCommands.setEnvironment()
+                    }
                 }
             }
         }
         stage("Build image") {
             steps {
                 script {
-                    ssoCommands.initializeImages(this)
-                    if (params.sso_commands == opzioneReset) {
-                        ssoCommands.buildDockerImagesReset(this)
-                    } else if (params.sso_commands == opzioneElimina) {
-                        ssoCommands.buildDockerImageDelete(this)
-                    } else if (params.sso_commands == opzionePopola) {
-                        ssoCommands.buildDockerImagePopulate(this)
+                    if (params.is_sso_commands) {
+                        ssoCommands.initializeImages(this)
+                        if (params.sso_commands == opzioneReset) {
+                            ssoCommands.buildDockerImagesReset(this)
+                        } else if (params.sso_commands == opzioneElimina) {
+                            ssoCommands.buildDockerImageDelete(this)
+                        } else if (params.sso_commands == opzionePopola) {
+                            ssoCommands.buildDockerImagePopulate(this)
+                        }
                     }
                 }
             }
@@ -37,12 +41,14 @@ pipeline {
         stage("Testing - running in Jenkins node") {
             steps {
                 script {
-                    if (params.sso_commands == opzioneReset) {
-                        ssoCommands.runDockerImagesReset(this)
-                    } else if (params.sso_commands == opzioneElimina) {
-                        ssoCommands.runDockerImageDelete(this)
-                    } else if (params.sso_commands == opzionePopola) {
-                        ssoCommands.runDockerImagePopulate(this)
+                    if (params.is_sso_commands) {
+                        if (params.sso_commands == opzioneReset) {
+                            ssoCommands.runDockerImagesReset(this)
+                        } else if (params.sso_commands == opzioneElimina) {
+                            ssoCommands.runDockerImageDelete(this)
+                        } else if (params.sso_commands == opzionePopola) {
+                            ssoCommands.runDockerImagePopulate(this)
+                        }
                     }
                 }
             }
@@ -51,12 +57,14 @@ pipeline {
         stage("Stopping running container") {
             steps {
                 script {
-                    if (params.sso_commands == opzioneReset) {
-                        ssoCommands.stopDockerContainersReset(this)
-                    } else if (params.sso_commands == opzioneElimina) {
-                        ssoCommands.stopDockerContainerDelete(this)
-                    } else if (params.sso_commands == opzionePopola) {
-                        ssoCommands.stopDockerContainerPopulate(this)
+                    if (params.is_sso_commands) {
+                        if (params.sso_commands == opzioneReset) {
+                            ssoCommands.stopDockerContainersReset(this)
+                        } else if (params.sso_commands == opzioneElimina) {
+                            ssoCommands.stopDockerContainerDelete(this)
+                        } else if (params.sso_commands == opzionePopola) {
+                            ssoCommands.stopDockerContainerPopulate(this)
+                        }
                     }
                 }
             }
@@ -65,12 +73,14 @@ pipeline {
         stage("Removing the container") {
             steps {
                 script {
-                    if (params.sso_commands == opzioneReset) {
-                        ssoCommands.deleteDockerContainersReset(this)
-                    } else if (params.sso_commands == opzioneElimina) {
-                        ssoCommands.deleteDockerContainerDelete(this)
-                    } else if (params.sso_commands == opzionePopola) {
-                        ssoCommands.deleteDockerContainerPopulate(this)
+                    if (params.is_sso_commands) {
+                        if (params.sso_commands == opzioneReset) {
+                            ssoCommands.deleteDockerContainersReset(this)
+                        } else if (params.sso_commands == opzioneElimina) {
+                            ssoCommands.deleteDockerContainerDelete(this)
+                        } else if (params.sso_commands == opzionePopola) {
+                            ssoCommands.deleteDockerContainerPopulate(this)
+                        }
                     }
                 }
             }
