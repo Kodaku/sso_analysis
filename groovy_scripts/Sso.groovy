@@ -1,11 +1,11 @@
 class Sso {
-    GroovyShell shell = new GroovyShell()
     def ssoCommands
     def ssoAuthLogs
     def ssoUserLogs
     def ssoUsers
 
     public void setup(def script) {
+        GroovyShell shell = new GroovyShell()
         ssoCommands = shell.parse(new File('${script.env.WORKSPACE}/groovy_scripts/SsoCommands.groovy')).createSsoCommands()
         ssoAuthLogs = shell.parse(new File('${script.env.WORKSPACE}/groovy_scripts/SsoAuthLogs.groovy')).createSsoAuthLogs()
         ssoUserLogs = shell.parse(new File('${script.env.WORKSPACE}/groovy_scripts/SsoUserLogs.groovy')).createSsoUserLogs()
