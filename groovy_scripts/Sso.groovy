@@ -6,10 +6,10 @@ class Sso {
 
     public void setup(def script) {
         GroovyShell shell = new GroovyShell()
-        def ssoCommandsScript = script.load "./SsoCommands.groovy"
-        def ssoAuthLogsScript = script.load "./SsoAuthLogs,groovy"
-        def ssoUserLogsScript = script.load "./SsoUserLogs.groovy"
-        def ssoUsersScript = script.load "./SsoUsers.groovy"
+        def ssoCommandsScript = script.load "./groovy_scripts/SsoCommands.groovy"
+        def ssoAuthLogsScript = script.load "./groovy_scripts/SsoAuthLogs.groovy"
+        def ssoUserLogsScript = script.load "./groovy_scripts/SsoUserLogs.groovy"
+        def ssoUsersScript = script.load "./groovy_scripts/SsoUsers.groovy"
         ssoCommands = ssoCommandsScript.createSsoCommands()
         ssoAuthLogs = ssoAuthLogsScript.createSsoAuthLogs()
         ssoUserLogs = ssoUserLogsScript.createSsoUserLogs()
