@@ -13,8 +13,8 @@ pipeline {
         stage("Init") {
             steps {
                 script {
-                    def commandsScript = load "./groovy_scripts/SsoCommands.groovy"
                     if (params.is_sso_commands) {
+                        def commandsScript = load "./groovy_scripts/SsoCommands.groovy"
                         ssoCommands = commandsScript.createSsoCommands()
                         ssoCommands.setEnvironment()
                     }
