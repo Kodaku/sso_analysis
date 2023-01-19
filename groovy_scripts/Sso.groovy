@@ -6,10 +6,18 @@ class Sso {
 
     public void setup(def script) {
         GroovyShell shell = new GroovyShell()
-        ssoCommands = shell.parse(new File('${script.env.WORKSPACE}/groovy_scripts/SsoCommands.groovy')).createSsoCommands()
-        ssoAuthLogs = shell.parse(new File('${script.env.WORKSPACE}/groovy_scripts/SsoAuthLogs.groovy')).createSsoAuthLogs()
-        ssoUserLogs = shell.parse(new File('${script.env.WORKSPACE}/groovy_scripts/SsoUserLogs.groovy')).createSsoUserLogs()
-        ssoUsers = shell.parse(new File('${script.env.WORKSPACE}/groovy_scripts/SsoUsers.groovy')).createSsoUsers()
+        def ssoCommandsScript = script.load "./SsoCommands.groovy"
+        def ssoAuthLogsScript = script.load "./SsoAuthLogs,groovy"
+        def ssoUserLogsScript = script.load "./SsoUserLogs.groovy"
+        def ssoUsersScript = script.load "./SsoUsers.groovy"
+        ssoCommands = ssoCommandsScript.createSsoCommands()
+        ssoAuthLogs = ssoAuthLogsScript.createSsoAuthLogs()
+        ssoUserLogs = ssoUserLogsScript.createSsoUserLogs()
+        ssoUsers = ssoUsersScript.createSsoUsers()
+//         ssoCommands = shell.parse(new File('${script.env.WORKSPACE}/groovy_scripts/SsoCommands.groovy')).createSsoCommands()
+//         ssoAuthLogs = shell.parse(new File('${script.env.WORKSPACE}/groovy_scripts/SsoAuthLogs.groovy')).createSsoAuthLogs()
+//         ssoUserLogs = shell.parse(new File('${script.env.WORKSPACE}/groovy_scripts/SsoUserLogs.groovy')).createSsoUserLogs()
+//         ssoUsers = shell.parse(new File('${script.env.WORKSPACE}/groovy_scripts/SsoUsers.groovy')).createSsoUsers()
     }
 
     public void setEnvironment(def script) {
