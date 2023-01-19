@@ -48,11 +48,11 @@ class SsoCommands {
         script.powershell "docker run --name ${sso_commands_upsert} ${sso_commands_upsert_img}"
     }
 
-    public void stopDockerContainerElimina(def script) {
+    public void stopDockerContainerDelete(def script) {
         script.powershell "docker stop ${sso_commands_delete}"
     }
 
-    public void stopDockerContainerPopola(def script) {
+    public void stopDockerContainerPopulate(def script) {
         script.powershell "docker stop ${sso_commands_upsert}"
     }
 
@@ -61,11 +61,11 @@ class SsoCommands {
         script.powershell "docker stop ${sso_commands_upsert}"
     }
 
-    public void deleteDockerContainerElimina(def script) {
+    public void deleteDockerContainerDelete(def script) {
         script.powershell "docker rm ${sso_commands_delete}"
     }
 
-    public void deleteDockerContainerPopola(def script) {
+    public void deleteDockerContainerPopulate(def script) {
         script.powershell "docker rm ${sso_commands_upsert}"
     }
 

@@ -40,9 +40,9 @@ pipeline {
                     if (params.sso_commands == opzioneReset) {
                         ssoCommands.runDockerImagesReset(this)
                     } else if (params.sso_commands == opzioneElimina) {
-                        ssoCommands.runDockerImageElimina(this)
+                        ssoCommands.runDockerImageDelete(this)
                     } else if (params.sso_commands == opzionePopola) {
-                        ssoCommands.runDockerImagePopola(this)
+                        ssoCommands.runDockerImagePopulate(this)
                     }
                 }
             }
@@ -54,9 +54,9 @@ pipeline {
                     if (params.sso_commands == opzioneReset) {
                         ssoCommands.stopDockerContainersReset(this)
                     } else if (params.sso_commands == opzioneElimina) {
-                        ssoCommands.stopDockerContainerElimina(this)
+                        ssoCommands.stopDockerContainerDelete(this)
                     } else if (params.sso_commands == opzionePopola) {
-                        ssoCommands.stopDockerContainerPopola(this)
+                        ssoCommands.stopDockerContainerPopulate(this)
                     }
                 }
             }
@@ -68,9 +68,9 @@ pipeline {
                     if (params.sso_commands == opzioneReset) {
                         ssoCommands.deleteDockerContainersReset(this)
                     } else if (params.sso_commands == opzioneElimina) {
-                        ssoCommands.deleteDockerContainerElimina(this)
+                        ssoCommands.deleteDockerContainerDelete(this)
                     } else if (params.sso_commands == opzionePopola) {
-                        ssoCommands.deleteDockerContainerPopola(this)
+                        ssoCommands.deleteDockerContainerPopulate(this)
                     }
                 }
             }
