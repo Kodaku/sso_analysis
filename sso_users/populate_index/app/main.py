@@ -21,7 +21,8 @@ class PdEncoder(json.JSONEncoder):
 
 
 if __name__ == "__main__":
-    conn, cur = connect_to_sso_db()
+    conn = connect_to_sso_db()
+    cur = conn.cursor()
     users_df = build_dataframe(conn, cur)
 
     es = Elasticsearch(

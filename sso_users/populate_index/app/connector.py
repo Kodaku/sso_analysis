@@ -18,4 +18,4 @@ def connect_to_sso_db():
         sys.exit(1)
 
     # Get Cursor
-    return conn, conn.cursor()
+    return conn
