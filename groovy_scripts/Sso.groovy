@@ -3,9 +3,6 @@ class Sso {
     def ssoAuthLogs
     def ssoUserLogs
     def ssoUsers
-    def opzioneReset = "Reset"
-    def opzioneElimina = "Elimina"
-    def opzionePopola = "Popola"
 
     public void setup(def script) {
         def ssoCommandsScript = script.load "./groovy_scripts/SsoCommands.groovy"

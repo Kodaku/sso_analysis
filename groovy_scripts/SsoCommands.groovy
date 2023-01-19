@@ -7,6 +7,9 @@ class SsoCommands {
     def sso_commands_delete_registry
     def ssoCommandsUpsertImage
     def ssoCommandsDeleteImage
+    def opzioneReset = "Reset"
+    def opzioneElimina = "Elimina"
+    def opzionePopola = "Popola"
 
     public void setEnvironment() {
         sso_commands_upsert_registry = "axelmastroianni/${this.sso_commands_upsert}"
