@@ -34,11 +34,29 @@ class Sso {
         if (script.params.is_sso_commands) {
             ssoCommands.buildDockerImages(script)
         }
+        if (script.params.is_sso_auth_logs) {
+            ssoAuthLogs.setEnvironment()
+        }
+        if (script.params.is_sso_user_logs) {
+            ssoUserLogs.setEnvironment()
+        }
+        if (script.params.is_sso_users) {
+            ssoUsers.setEnvironment()
+        }
     }
 
     public void runDockerContainers(def script) {
         if (script.params.is_sso_commands) {
             ssoCommands.runDockerContainers(script)
+        }
+        if (script.params.is_sso_auth_logs) {
+            ssoAuthLogs.runDockerContainers(script)
+        }
+        if (script.params.is_sso_user_logs) {
+            ssoUserLogs.runDockerContainers(script)
+        }
+        if (script.params.is_sso_users) {
+            ssoUsers.runDockerContainers(script)
         }
     }
 
@@ -46,11 +64,29 @@ class Sso {
         if (script.params.is_sso_commands) {
             ssoCommands.stopDockerContainers(script)
         }
+        if (script.params.is_sso_auth_logs) {
+            ssoAuthLogs.stopDockerContainers(script)
+        }
+        if (script.params.is_sso_user_logs) {
+            ssoUserLogs.stopDockerContainers(script)
+        }
+        if (script.params.is_sso_users) {
+            ssoUsers.stopDockerContainers(script)
+        }
     }
 
     public void removeDockerContainers(def script) {
         if (script.params.is_sso_commands) {
             ssoCommands.removeDockerContainers(script)
+        }
+        if (script.params.is_sso_auth_logs) {
+            ssoAuthLogs.removeDockerContainers(script)
+        }
+        if (script.params.is_sso_user_logs) {
+            ssoUserLogs.removeDockerContainers(script)
+        }
+        if (script.params.is_sso_users) {
+            ssoUsers.removeDockerContainers(script)
         }
     }
 }

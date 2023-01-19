@@ -7,6 +7,9 @@ class SsoAuthLogs {
     def sso_auth_logs_delete_registry
     def ssoAuthLogsUpsertImage
     def ssoAuthLogsDeleteImage
+    def opzioneReset = "Reset"
+    def opzioneElimina = "Elimina"
+    def opzionePopola = "Popola"
 
     public void setEnvironment() {
         sso_auth_logs_upsert_registry = "axelmastroianni/${this.sso_auth_logs_upsert}"
@@ -22,56 +25,49 @@ class SsoAuthLogs {
         println("${sso_auth_logs_upsert_img}")
     }
 
-    public void buildDockerImageDelete(def script) {
-        ssoAuthLogsDeleteImage = script.docker.build("${sso_auth_logs_delete_img}", "-f ${script.env.WORKSPACE}/sso_auth_logs/delete_index/Dockerfile .")
+    public void buildDockerImages(def script) {
+        initializeImages(script)
+        if (script.params.sso_auth_logs == opzioneReset) {
+            ssoAuthLogsUpsertImage = script.docker.build("${sso_auth_logs_upsert_img}", "-f ${script.env.WORKSPACE}/sso_auth_logs/populate_index/Dockerfile .")
+            ssoAuthLogsDeleteImage = script.docker.build("${sso_auth_logs_delete_img}", "-f ${script.env.WORKSPACE}/sso_auth_logs/delete_index/Dockerfile .")
+        } else if (script.params.sso_auth_logs == opzioneElimina) {
+            ssoAuthLogsDeleteImage = script.docker.build("${sso_auth_logs_delete_img}", "-f ${script.env.WORKSPACE}/sso_auth_logs/delete_index/Dockerfile .")
+        } else if (script.params.sso_auth_logs == opzionePopola) {
+            ssoAuthLogsUpsertImage = script.docker.build("${sso_auth_logs_upsert_img}", "-f ${script.env.WORKSPACE}/sso_auth_logs/populate_index/Dockerfile .")
+        }
     }
 
-    public void buildDockerImagePopulate(def script) {
-        ssoAuthLogsUpsertImage = script.docker.build("${sso_auth_logs_upsert_img}", "-f ${script.env.WORKSPACE}/sso_auth_logs/populate_index/Dockerfile .")
+    public void runDockerContainers(def script) {
+        if (script.params.sso_auth_logs == opzioneReset) {
+            script.powershell "docker run --name ${sso_auth_logs_delete} ${sso_auth_logs_delete_img}"
+            script.powershell "docker run --name ${sso_auth_logs_upsert} ${sso_auth_logs_upsert_img}"
+        } else if (script.params.sso_auth_logs == opzioneElimina) {
+            script.powershell "docker run --name ${sso_auth_logs_delete} ${sso_auth_logs_delete_img}"
+        } else if (script.params.sso_auth_logs == opzionePopola) {
+            script.powershell "docker run --name ${sso_auth_logs_upsert} ${sso_auth_logs_upsert_img}"
+        }
     }
 
-    public void buildDockerImagesReset(def script) {
-        ssoAuthLogsUpsertImage = script.docker.build("${sso_auth_logs_upsert_img}", "-f ${script.env.WORKSPACE}/sso_auth_logs/populate_index/Dockerfile .")
-        ssoAuthLogsDeleteImage = script.docker.build("${sso_auth_logs_delete_img}", "-f ${script.env.WORKSPACE}/sso_auth_logs/delete_index/Dockerfile .")
+    public void stopDockerContainers(def script) {
+        if (script.params.sso_auth_logs == opzioneReset) {
+            script.powershell "docker stop ${sso_auth_logs_delete}"
+            script.powershell "docker stop ${sso_auth_logs_upsert}"
+        } else if (script.params.sso_auth_logs == opzioneElimina) {
+            script.powershell "docker stop ${sso_auth_logs_delete}"
+        } else if (script.params.sso_auth_logs == opzionePopola) {
+            script.powershell "docker stop ${sso_auth_logs_upsert}"
+        }
     }
 
-    public void runDockerImageDelete(def script) {
-        script.powershell "docker run --name ${sso_auth_logs_delete} ${sso_auth_logs_delete_img}"
-    }
-
-    public void runDockerImagePopulate(def script) {
-        script.powershell "docker run --name ${sso_auth_logs_upsert} ${sso_auth_logs_upsert_img}"
-    }
-
-    public void runDockerImagesReset(def script) {
-        script.powershell "docker run --name ${sso_auth_logs_delete} ${sso_auth_logs_delete_img}"
-        script.powershell "docker run --name ${sso_auth_logs_upsert} ${sso_auth_logs_upsert_img}"
-    }
-
-    public void stopDockerContainerDelete(def script) {
-        script.powershell "docker stop ${sso_auth_logs_delete}"
-    }
-
-    public void stopDockerContainerPopulate(def script) {
-        script.powershell "docker stop ${sso_auth_logs_upsert}"
-    }
-
-    public void stopDockerContainersReset(def script) {
-        script.powershell "docker stop ${sso_auth_logs_delete}"
-        script.powershell "docker stop ${sso_auth_logs_upsert}"
-    }
-
-    public void deleteDockerContainerDelete(def script) {
-        script.powershell "docker rm ${sso_auth_logs_delete}"
-    }
-
-    public void deleteDockerContainerPopulate(def script) {
-        script.powershell "docker rm ${sso_auth_logs_upsert}"
-    }
-
-    public void deleteDockerContainersReset(def script) {
-        script.powershell "docker rm ${sso_auth_logs_delete}"
-        script.powershell "docker rm ${sso_auth_logs_upsert}"
+    public void removeDockerContainers(def script) {
+        if (script.params.sso_auth_logs == opzioneReset) {
+            script.powershell "docker rm ${sso_auth_logs_delete}"
+            script.powershell "docker rm ${sso_auth_logs_upsert}"
+        } else if (script.params.sso_auth_logs == opzioneElimina) {
+            script.powershell "docker rm ${sso_auth_logs_delete}"
+        } else if (script.params.sso_auth_logs == opzionePopola) {
+            script.powershell "docker rm ${sso_auth_logs_upsert}"
+        }
     }
 }
 
