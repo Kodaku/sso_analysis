@@ -3,6 +3,9 @@ class Sso {
     def ssoAuthLogs
     def ssoUserLogs
     def ssoUsers
+    def opzioneReset = "Reset"
+    def opzioneElimina = "Elimina"
+    def opzionePopola = "Popola"
 
     public void setup(def script) {
         def ssoCommandsScript = script.load "./groovy_scripts/SsoCommands.groovy"
@@ -27,6 +30,55 @@ class Sso {
         }
         if (script.params.is_sso_users) {
             ssoUsers.setEnvironment()
+        }
+    }
+
+    public void buildDockerImages(def script) {
+        if (script.params.is_sso_commands) {
+            ssoCommands.initializeImages(script)
+            if (script.params.sso_commands == opzioneReset) {
+                ssoCommands.buildDockerImagesReset(script)
+            } else if (script.params.sso_commands == opzioneElimina) {
+                ssoCommands.buildDockerImageDelete(script)
+            } else if (script.params.sso_commands == opzionePopola) {
+                ssoCommands.buildDockerImagePopulate(script)
+            }
+        }
+    }
+
+    public void runDockerContainers(def script) {
+        if (script.params.is_sso_commands) {
+            if (script.params.sso_commands == opzioneReset) {
+                ssoCommands.runDockerImagesReset(script)
+            } else if (script.params.sso_commands == opzioneElimina) {
+                ssoCommands.runDockerImageDelete(script)
+            } else if (script.params.sso_commands == opzionePopola) {
+                ssoCommands.runDockerImagePopulate(script)
+            }
+        }
+    }
+
+    public void stopDockerContainers(def script) {
+        if (script.params.is_sso_commands) {
+            if (script.params.sso_commands == opzioneReset) {
+                ssoCommands.stopDockerContainersReset(script)
+            } else if (script.params.sso_commands == opzioneElimina) {
+                ssoCommands.stopDockerContainerDelete(script)
+            } else if (script.params.sso_commands == opzionePopola) {
+                ssoCommands.stopDockerContainerPopulate(script)
+            }
+        }
+    }
+
+    public void removeDockerContainers(def script) {
+        if (script.params.is_sso_commands) {
+            if (script.params.sso_commands == opzioneReset) {
+                ssoCommands.deleteDockerContainersReset(script)
+            } else if (script.params.sso_commands == opzioneElimina) {
+                ssoCommands.deleteDockerContainerDelete(script)
+            } else if (script.params.sso_commands == opzionePopola) {
+                ssoCommands.deleteDockerContainerPopulate(script)
+            }
         }
     }
 }
