@@ -26,8 +26,8 @@ pipeline {
                 }
             }
         }
-//         stage("Build image") {
-//             steps {
+        stage("Build image") {
+            steps {
 //                 script {
 //                     if (params.is_sso_commands) {
 //                         ssoCommands.initializeImages(this)
@@ -40,11 +40,11 @@ pipeline {
 //                         }
 //                     }
 //                 }
-//             }
-//         }
+            }
+        }
 
-//         stage("Testing - running in Jenkins node") {
-//             steps {
+        stage("Testing - running in Jenkins node") {
+            steps {
 //                 script {
 //                     if (params.is_sso_commands) {
 //                         if (params.sso_commands == opzioneReset) {
@@ -56,11 +56,11 @@ pipeline {
 //                         }
 //                     }
 //                 }
-//             }
-//         }
+            }
+        }
 //
-//         stage("Stopping running container") {
-//             steps {
+        stage("Stopping running container") {
+            steps {
 //                 script {
 //                     if (params.is_sso_commands) {
 //                         if (params.sso_commands == opzioneReset) {
@@ -72,11 +72,11 @@ pipeline {
 //                         }
 //                     }
 //                 }
-//             }
-//         }
+            }
+        }
 //
-//         stage("Removing the container") {
-//             steps {
+        stage("Removing the container") {
+            steps {
 //                 script {
 //                     if (params.is_sso_commands) {
 //                         if (params.sso_commands == opzioneReset) {
@@ -88,7 +88,7 @@ pipeline {
 //                         }
 //                     }
 //                 }
-//             }
-//         }
+            }
+        }
     }
 }
