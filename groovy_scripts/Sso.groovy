@@ -35,13 +35,13 @@ class Sso {
             ssoCommands.buildDockerImages(script)
         }
         if (script.params.is_sso_auth_logs) {
-            ssoAuthLogs.setEnvironment()
+            ssoAuthLogs.buildDockerImages(script)
         }
         if (script.params.is_sso_user_logs) {
-            ssoUserLogs.setEnvironment()
+            ssoUserLogs.buildDockerImages(script)
         }
         if (script.params.is_sso_users) {
-            ssoUsers.setEnvironment()
+            ssoUsers.buildDockerImages(script)
         }
     }
 
