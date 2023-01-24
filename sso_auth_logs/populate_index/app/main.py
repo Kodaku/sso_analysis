@@ -25,7 +25,7 @@ if __name__ == "__main__":
     auth_logs_df = build_dataframe(cur)
 
     es = Elasticsearch(
-        hosts=['http://host.docker.internal:9200'],
+        hosts=['http://localhost:9200'],
         basic_auth=('elastic', 'Cj-ChuXcllkRQF8t8VFa')
     )
 
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         action = {"index": {"_index": index_name, "_id": index}, "_op_type": "upsert"}
         doc = command
         actions.append(action)
-        actions.append(json.dumps(doc, cls=PdEncoder))
+        actions.append(doc)
         index += 1
 
     res = es.bulk(index=index_name, operations=actions)

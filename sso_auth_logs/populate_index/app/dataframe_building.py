@@ -2,7 +2,13 @@ import json
 import pandas as pd
 from utils import categorize_descr, categorize_event
 from enums import AuthLogEvent, FailureCause
+from datetime import datetime
 
+class PdEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime):
+            return str(obj)
+        return json.JSONEncoder.default(self, obj)
 
 def build_dataframe(cur):
     query = "SELECT * from sso.auth_log;"
@@ -12,14 +18,14 @@ def build_dataframe(cur):
         _, livello, created_at, descr, username, _, event, remote_host = result
         auth_logs.append({
             "livello": livello,
-            "created_at": str(created_at),
+            "created_at": created_at,
             "failure_cause": categorize_descr(descr),
             "username": username,
             "event": categorize_event(event),
             "remote_host": remote_host
         }
         )
-    auth_logs_df = pd.read_json(json.dumps(auth_logs))
+    auth_logs_df = pd.read_json(json.dumps(auth_logs, cls=PdEncoder))
     return preprocess_dataframe(auth_logs_df)
 
 
