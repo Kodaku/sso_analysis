@@ -9,7 +9,7 @@ def build_dataframe(cur):
     for result in cur:
         _, username, password_hash, secret, additional_security, is_staff, name, surname, email, last_update_ts, \
             disabled_until_ts, state, password_expiration_ts, user_type, origin, \
-            row_id, operator_id, created_at, operator_name, update_data, username, operation_id = result
+            row_id, operator_id, created_at, operator_name, update_data, username, operation_id, _, _, _, _, _ = result
         user_logs.append(
             {
                 "operator_id": operator_id,
