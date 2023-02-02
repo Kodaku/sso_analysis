@@ -12,8 +12,9 @@ def build_dataframe(cur):
             row_id, operator_id, created_at, operator_name, update_data, username, operation_id, _, _, _, _, _ = result
         user_logs.append(
             {
+                "id": str(created_at),
                 "operator_id": operator_id,
-                "created_at": str(created_at),
+                "created_at": created_at,
                 "operator_name": operator_name,
                 "username": username,
                 "operation_type": operation_id,

@@ -4,6 +4,7 @@ from connector import connect_to_sso_db
 from dataframe_building import build_dataframe
 import json
 import pandas as pd
+import uuid
 
 
 def es_create_index_if_not_exists(es, index):
@@ -48,7 +49,7 @@ if __name__ == "__main__":
         command = {}
         for column in users_df.columns:
             command[column] = command_row[column]
-        action = {"index": {"_index": index_name, "_id": index}, "_op_type": "upsert"}
+        action = {"index": {"_index": index_name, "_id": uuid.uuid1()}, "_op_type": "upsert"}
         doc = command
         actions.append(action)
         actions.append(json.dumps(doc, cls=PdEncoder))

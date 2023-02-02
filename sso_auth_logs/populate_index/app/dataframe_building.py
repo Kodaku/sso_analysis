@@ -17,6 +17,7 @@ def build_dataframe(cur):
     for result in cur:
         _, livello, created_at, descr, username, _, event, remote_host = result
         auth_logs.append({
+            "id": str(created_at),
             "livello": livello,
             "created_at": created_at,
             "failure_cause": categorize_descr(descr),

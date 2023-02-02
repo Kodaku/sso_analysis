@@ -14,6 +14,7 @@ def build_dataframe(conn, cur):
         users_avatar_query = f"SELECT * FROM sso.`user` u JOIN sso.`file` f ON u.username = f.username WHERE u.username = '{username}';"
         avatar_cur.execute(users_avatar_query)
         user = {
+            "id": user_id + username + name + surname + email + user_type,
             "user_id": user_id,
             "username": username,
             "is_staff": True if is_staff == 1 else False,

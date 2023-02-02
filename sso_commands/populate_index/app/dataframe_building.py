@@ -10,6 +10,7 @@ def build_dataframe(cur):
         command_tag, command_name, command_type, level, _, command_state, _, username, _, _, user_id, user_state = result
         commands.append(
             {
+                "id": command_tag + command_name + command_type,
                 "command_tag": command_tag,
                 "command_name": command_name,
                 "command_type": command_type,
