@@ -48,7 +48,7 @@ if __name__ == "__main__":
         command = {}
         for column in user_logs_df.columns:
             command[column] = command_row[column]
-        action = {"index": {"_index": index_name, "_id": uuid.uuid1()}, "_op_type": "upsert"}
+        action = {"index": {"_index": index_name, "_id": index}, "_op_type": "upsert"}
         doc = command
         actions.append(action)
         actions.append(json.dumps(doc, cls=PdEncoder))
