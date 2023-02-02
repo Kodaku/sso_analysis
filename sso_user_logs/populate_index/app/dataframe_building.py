@@ -1,6 +1,12 @@
 import json
 import pandas as pd
+from datetime import datetime
 
+class PdEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime):
+            return str(obj)
+        return json.JSONEncoder.default(self, obj)
 
 def build_dataframe(cur):
     query = "select * from sso.`user` u join sso.user_log ul on u.username = ul.username;"
@@ -21,7 +27,7 @@ def build_dataframe(cur):
                 "is_staff": True if is_staff == 1 else False
             }
         )
-    user_logs_df = pd.read_json(json.dumps(user_logs))
+    user_logs_df = pd.read_json(json.dumps(user_logs, cls=PdEncoder))
     return preprocess_dataframe(user_logs_df)
 
 
